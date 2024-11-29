@@ -4,6 +4,8 @@ const config = require('./config');
 const env = process.env.NODE_ENV || 'development';
 const { url, dialect } = config[env];
 
+console.log('Environment: ', env);
+
 const sequelize = new Sequelize(url, {
   dialect: dialect || 'postgres',
   logging: false,
