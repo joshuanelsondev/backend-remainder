@@ -1,27 +1,64 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
+const crypto = require("crypto");
+const { WebAuthn } = require("@passwordless-id/webauthn");
 const db = require("../models");
+const config = require("../config");
 
 const router = express.Router();
+
+// Nodemailer
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: config.EMAIL,
+    pass: config.EMAIL_PASSWORD,
+  },
+});
+
+// Initialize WebAuthn
+const webAuthn = new WebAuthn({
+  origin: config.EXPECTED_ORIGIN,
+  rpID: config.EXPECTED_RPID,
+  challengeTimeoutMS: 60000,
+  userTimeoutMS: 60000,
+});
 
 // Sign up
 router.post("/signup", async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
+    const verificationToken = crypto.randomBytes(32).toString("hex");
 
     // Create user
     const newUser = await db.User.create({
       email,
       password: hashedPassword,
+      verificationToken,
+      isVerified: false,
     });
 
-    res
-      .status(201)
-      .json({ message: "User created successfully", user: newUser });
+    // Send verification email
+    const mailOptions = {
+      from: config.EMAIL,
+      to: newUser.email,
+      subject: "Emial Verification",
+      text: `Please verify you email by clicking the following link: ${config.BASE_URL}/verify-email?token=${verificationToken}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return res.status(500).json({ message: "Error sending email", error });
+      }
+      res
+        .status(201)
+        .json({
+          message: "User created successfully. Please verify your email.",
+        });
+    });
   } catch (error) {
     res.status(500).json({ message: "Error creating user", error });
   }
