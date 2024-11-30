@@ -17,6 +17,7 @@ const loginController = async (req, res) => {
     }
 
     const token = generateToken({ id: user.id });
+
     res.status(200).json({ message: "Login successful", token });
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error });

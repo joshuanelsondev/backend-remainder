@@ -7,12 +7,12 @@ const verifyEmailController = require("../controllers/auth/verifyEmail");
 const registerPasskeyController = require("../controllers/auth/registerPasskey");
 const verifyRegistrationController = require("../controllers/auth/verifyRegistration");
 const generateAuthOptionsController = require("../controllers/auth/generateAuthOptions");
-const verifyPasskeyController = require("../controllers/auth/generateAuthOptions");
+const verifyPasskeyController = require("../controllers/auth/verifyPasskey");
 
 // Import middleware and utils
 const createRateLimiter = require("../utils/rateLimiter");
-const { validateSignup } = require("../utils/validation");
-const { authMiddleware } = require("../utils/auth");
+const validateSignup = require("../utils/validation");
+const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
@@ -28,7 +28,11 @@ router.post("/verify-registration", verifyRegistrationController);
 router.post("/verify-email", verifyEmailController);
 
 // Authentication Routes
-router.post("/generate-auth-options", generateAuthOptionsController);
-router.post("verify-passkey", verifyPasskeyController);
+router.post(
+  "/generate-auth-options",
+  authMiddleware,
+  generateAuthOptionsController
+);
+router.post("verify-passkey", authMiddleware, verifyPasskeyController);
 
 module.exports = router;
