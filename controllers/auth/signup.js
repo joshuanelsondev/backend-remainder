@@ -1,7 +1,6 @@
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
-const { validationResult } = require("express-validator");
 const db = require("../../models");
 const config = require("../../config/config");
 
@@ -16,11 +15,6 @@ const transporter = nodemailer.createTransport({
 
 // Sign up
 const signupController = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
   try {
     const { email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);

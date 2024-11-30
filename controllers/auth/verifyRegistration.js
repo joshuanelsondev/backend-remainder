@@ -1,6 +1,6 @@
 const { server } = require("@passwordless-id/webauthn");
 const db = require("../../models");
-const config = require("../../config");
+const config = require("../../config/config");
 const normalizeChallenge = require("../../utils/challengeUtils");
 
 const verifyRegistration = async (req, res) => {
