@@ -2,7 +2,7 @@ const { server } = require("@passwordless-id/webauthn");
 const db = require("../../models");
 const config = require("../../config");
 const normalizeChallenge = require("../../utils/challengeUtils");
-const generateToken = require("../../utils/token");
+const { generateToken } = require("../../utils/token");
 
 const verifyPasskey = async (req, res) => {
   try {

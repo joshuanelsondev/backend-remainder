@@ -1,5 +1,5 @@
 const bcrypt = require("bcryptjs");
-const generateToken = require("../../utils/token");
+const { generateToken } = require("../../utils/token");
 const db = require("../../models");
 
 const loginController = async (req, res) => {
