@@ -1,8 +1,10 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const generateToken = require("../utils/token");
 const nodemailer = require("nodemailer");
 const { check, validationResult } = require("express-validator");
+const normalizeChallenge = require("../utils/challengeUtils");
+const createRateLimiter = require("../utils/rateLimiter");
 const crypto = require("crypto");
 const { server } = require("@passwordless-id/webauthn");
 const db = require("../models");
@@ -19,9 +21,12 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+const signupRateLimiter = createRateLimiter(10 * 60 * 100, 3);
+
 // Sign up
 router.post(
   "/signup",
+  signupRateLimiter,
   [
     check("email").isEmail().withMessage("Invalid email format"),
     check("password")
@@ -55,8 +60,10 @@ router.post(
         text: `Please verify you email by clicking the following link: ${config.BASE_URL}/verify-email?token=${verificationToken}`,
       };
 
-      transporter.sendMail(mailOptions, (error) => {
+      transporter.sendMail(mailOptions, async (error, info) => {
         if (error) {
+          console.error("Email Error:", error);
+          await db.EmailErrorLog.create({ userId: newUser.id, error });
           return res
             .status(500)
             .json({ message: "Error sending email", error });
@@ -134,14 +141,11 @@ router.post("/verify-passkey", async (req, res) => {
     }
 
     // Format expected challenge
-    const expectedChallenge = user.challenge
-      .replace(/=*$/, "")
-      .replace(/\+/g, "-")
-      .replace(/\//g, "_");
+    const normalizedChallenge = normalizeChallenge(user.challenge);
 
     const verification = await server.verifyAuthenticationResponse({
       response: credential,
-      expectedChallenge,
+      normalizedChallenge,
       expectedOrigin: config.EXPECTED_ORIGIN,
       expectedRPID: config.EXPECTED_RPID,
       userVerification: "required",
@@ -152,9 +156,8 @@ router.post("/verify-passkey", async (req, res) => {
       user.authCounter = verification.authenticationInfo.counter;
       await user.save();
 
-      const token = jwt.sign({ id: user.id }, config.JWT_SECRET, {
-        expiresIn: "1h",
-      });
+      const token = generateToken({ id: user.id });
+
       res.status(200).json({ message: "Login successful", token });
     } else {
       res.status(400).json({ message: "Invalid authentication response" });
@@ -209,14 +212,11 @@ router.post("/verify-registration", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const expectedChallenge = user.challenge
-      .replace(/=*$/, "")
-      .replace(/\+/g, "-")
-      .replace(/\//g, "_");
+    const normalizedChallenge = normalizeChallenge(user.challenge);
 
     const verification = await server.verifyRegistrationResponse({
       response: credential,
-      expectedChallenge,
+      normalizedChallenge,
       expectedOrigin: config.EXPECTED_ORIGIN,
       expectedRPID: config.EXPECTED_RPID,
     });
@@ -238,8 +238,10 @@ router.post("/verify-registration", async (req, res) => {
   }
 });
 
+const loginRateLimiter = createRateLimiter(15 * 60 * 1000, 5);
+
 // Login
-router.post("/login", async (req, res) => {
+router.post("/login", loginRateLimiter, async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -258,9 +260,7 @@ router.post("/login", async (req, res) => {
     }
 
     // Generate token
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = generateToken({ id: user.id });
 
     res.status(200).json({ message: "Login successful", token });
   } catch (error) {
