@@ -1,46 +1,79 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable("Users", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
-      firstName: {
-        type: Sequelize.STRING
+      first_name: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
-      lastName: {
-        type: Sequelize.STRING
+      last_name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      username: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: true,
+        unique: true,
       },
       password: {
-        type: Sequelize.STRING
-      },
-      isVerified: {
-        type: Sequelize.BOOLEAN
-      },
-      mfaEnabled: {
-        type: Sequelize.BOOLEAN
-      },
-      riskPreference: {
-        type: Sequelize.STRING
-      },
-      createdAt: {
+        type: Sequelize.STRING,
         allowNull: false,
-        type: Sequelize.DATE
       },
-      updatedAt: {
+      is_verified: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
+      mfa_enabled: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
+      risk_preference: {
+        type: Sequelize.ENUM("low", "high"),
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        defaultValue: "low",
+      },
+      last_login_at: {
+        type: Sequelize.TIME,
+      },
+      verification_token: {
+        type: Sequelize.STRING,
+      },
+      webauthnid: {
+        type: Sequelize.STRING,
+      },
+      webauthnpublickey: {
+        type: Sequelize.STRING,
+      },
+      auth_counter: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+      },
+      mfa_secret: {
+        type: Sequelize.STRING,
+      },
+      created_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updated_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
-  }
+    await queryInterface.dropTable("Users");
+  },
 };

@@ -28,4 +28,10 @@ module.exports = {
     url: process.env.DATABASE_URL,
     dialect: 'postgres',
   },
+  EMAIL: process.env.EMAIL,
+  EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
+  JWT_SECRET: process.env.JWT_SECRET,
+  BASE_URL: process.env.BASE_URL,
+  EXPECTED_ORIGIN: process.env.EXPECTED_ORIGIN,
+  EXPECTED_RPID: process.env.EXPECTED_RPID,
 };

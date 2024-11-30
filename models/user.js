@@ -57,10 +57,31 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: "low",
       },
       lastLoginAt: DataTypes.TIME,
+      verificationToken: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      webauthnid: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      webauthnpublickey: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      authCounter: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      mfaSecret: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     {
       sequelize,
-      modelName: "users",
+      modelName: "User",
+      tableName: "users",
       underscored: true,
       timestamps: true,
     }
