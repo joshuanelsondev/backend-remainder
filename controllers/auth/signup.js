@@ -16,12 +16,15 @@ const transporter = nodemailer.createTransport({
 // Sign up
 const signupController = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { firstName, lastName, username, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const verificationToken = crypto.randomBytes(32).toString("hex");
 
     // Create user
     const newUser = await db.User.create({
+      firstName,
+      lastName,
+      username,
       email,
       password: hashedPassword,
       verificationToken,
@@ -36,7 +39,7 @@ const signupController = async (req, res) => {
       text: `Please verify you email by clicking the following link: ${config.BASE_URL}/verify-email?token=${verificationToken}`,
     };
 
-    transporter.sendMail(mailOptions, async (error, info) => {
+    transporter.sendMail(mailOptions, async (error) => {
       if (error) {
         console.error("Email Error:", error);
         await db.EmailErrorLog.create({ userId: newUser.id, error });
