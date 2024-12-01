@@ -1,8 +1,8 @@
-const path = require('path');
-const dotenv = require('dotenv');
+const path = require("path");
+const dotenv = require("dotenv");
 
-const envFile = `.env.${process.env.NODE_ENV || 'development'}`;
-const envFilePath = path.resolve(__dirname, '..', envFile);
+const envFile = `.env.${process.env.NODE_ENV || "development"}`;
+const envFilePath = path.resolve(__dirname, "..", envFile);
 const result = dotenv.config({ path: envFilePath });
 
 if (result.error) {
@@ -11,22 +11,22 @@ if (result.error) {
 
 if (!process.env.DATABASE_URL) {
   console.warn(
-    'Warning: DATABASE_URL is not defined in the environment variables.'
+    "Warning: DATABASE_URL is not defined in the environment variables."
   );
 }
 
 module.exports = {
   development: {
     url: process.env.DATABASE_URL,
-    dialect: 'postgres',
+    dialect: "postgres",
   },
   staging: {
     url: process.env.DATABASE_URL,
-    dialect: 'postgres',
+    dialect: "postgres",
   },
   production: {
     url: process.env.DATABASE_URL,
-    dialect: 'postgres',
+    dialect: "postgres",
   },
   EMAIL: process.env.EMAIL,
   EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,

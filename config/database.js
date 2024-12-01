@@ -1,23 +1,21 @@
-const { Sequelize } = require('sequelize');
-const config = require('./config');
+const { Sequelize } = require("sequelize");
+const config = require("./config");
 
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || "development";
 const { url, dialect } = config[env];
 
-console.log('Environment: ', env);
-
 const sequelize = new Sequelize(url, {
-  dialect: dialect || 'postgres',
+  dialect: dialect || "postgres",
   logging: false,
 });
 
 sequelize
   .authenticate()
   .then(() => {
-    console.log('Connection has been established successfully.');
+    console.log("Connection has been established successfully.");
   })
   .catch((error) => {
-    console.error('Unable to connect to the database:', error);
+    console.error("Unable to connect to the database:", error);
   });
 
 module.exports = sequelize;
