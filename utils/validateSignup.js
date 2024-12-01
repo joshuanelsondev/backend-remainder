@@ -9,6 +9,17 @@ const signupSchema = Joi.object({
     "string.min": "Password must be at least 8 characters",
     "string.empty": "Password is required",
   }),
+  firstName: Joi.string().required().messages({
+    "string.empty": "First name is required",
+  }),
+  lastName: Joi.string().required().messages({
+    "string.empty": "Last name is required",
+  }),
+  username: Joi.string().alphanum().min(3).required().messages({
+    "string.alphanum": "Username must only contain letters and numbers",
+    "string.min": "Username must be at least 3 characters",
+    "string.empty": "Username is required",
+  }),
 });
 
 const validateSignup = (req, res, next) => {
