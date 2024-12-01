@@ -24,16 +24,11 @@ const signupSchema = Joi.object({
 
 const validateSignup = (req, res, next) => {
   const { error } = signupSchema.validate(req.body, { abortEarly: false });
-
   if (error) {
-    const errors = error.details.map((detail) => ({
-      field: detail.path[0],
-      message: detail.message,
-    }));
-
-    return res.status(400).json({ errors });
+    return res.status(400).json({
+      errors: error.details.map((detail) => detail.message),
+    });
   }
-
   next();
 };
 
