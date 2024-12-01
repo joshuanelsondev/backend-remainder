@@ -29,6 +29,7 @@ const signupController = async (req, res) => {
       password: hashedPassword,
       verificationToken,
       isVerified: false,
+      lastLoginAt: new Date(),
     });
 
     // Send verification email

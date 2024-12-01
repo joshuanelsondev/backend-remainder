@@ -8,7 +8,6 @@ const sequelize = new Sequelize(url, {
   dialect: dialect || "postgres",
   logging: false,
 });
-console.log(sequelize.config.database); // Should be 'remainder_development'
 
 sequelize
   .authenticate()
