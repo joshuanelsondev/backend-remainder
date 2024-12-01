@@ -1,8 +1,5 @@
-const express = require("express");
+const app = require("./app");
 const sequelize = require("./config/database");
-const app = express();
-
-app.use(express.json());
 
 const authRoutes = require("./routes/authRoutes");
 app.use("/auth", authRoutes);
@@ -19,5 +16,3 @@ sequelize
   .catch((error) => {
     console.error("Error synchronizing models: ", error);
   });
-
-module.exports = app;
