@@ -8,8 +8,8 @@ const config = require("../../config/config");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: config.EMAIL,
-    pass: config.EMAIL_PASSWORD,
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PASSWORD,
   },
 });
 
@@ -19,24 +19,6 @@ const signupController = async (req, res) => {
     const { firstName, lastName, username, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const verificationToken = crypto.randomBytes(32).toString("hex");
-
-    console.log(
-      "FIELDS TEST: ",
-      "firstName:",
-      firstName,
-      "lastName:",
-      lastName,
-      "username:",
-      username,
-      "email:",
-      email,
-      "password:",
-      password,
-      "hashedPassword:",
-      hashedPassword,
-      "verifcationToken:",
-      verificationToken
-    );
 
     // Create user
     const newUser = await db.User.create({
@@ -52,12 +34,13 @@ const signupController = async (req, res) => {
 
     // Send verification email
     const mailOptions = {
-      from: config.EMAIL,
+      from: process.env.EMAIL,
       to: newUser.email,
       subject: "Email Verification",
-      text: `Please verify you email by clicking the following link: ${config.BASE_URL}/verify-email?token=${verificationToken}`,
+      text: `Please verify your email by clicking the following link: ${config.BASE_URL}/verify-email?token=${verificationToken}`,
     };
 
+    console.log("mailOptions: ", mailOptions, "newUser:", newUser);
     transporter.sendMail(mailOptions, async (error) => {
       if (error) {
         console.error("Email Error:", error);
