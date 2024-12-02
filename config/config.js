@@ -1,8 +1,8 @@
 const path = require("path");
 const dotenv = require("dotenv");
 
-const envFile = `.env.${process.env.NODE_ENV || "development"}`;
-const envFilePath = path.resolve(__dirname, "..", envFile);
+// Load the default `.env` file
+const envFilePath = path.resolve(__dirname, "..", ".env");
 const result = dotenv.config({ path: envFilePath });
 
 if (result.error) {

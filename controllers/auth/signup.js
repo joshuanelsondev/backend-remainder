@@ -20,6 +20,24 @@ const signupController = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const verificationToken = crypto.randomBytes(32).toString("hex");
 
+    console.log(
+      "FIELDS TEST: ",
+      "firstName:",
+      firstName,
+      "lastName:",
+      lastName,
+      "username:",
+      username,
+      "email:",
+      email,
+      "password:",
+      password,
+      "hashedPassword:",
+      hashedPassword,
+      "verifcationToken:",
+      verificationToken
+    );
+
     // Create user
     const newUser = await db.User.create({
       firstName,
@@ -29,6 +47,7 @@ const signupController = async (req, res) => {
       password: hashedPassword,
       verificationToken,
       isVerified: false,
+      lastLoginAt: new Date(),
     });
 
     // Send verification email

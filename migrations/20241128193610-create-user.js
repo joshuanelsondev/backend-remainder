@@ -1,4 +1,5 @@
 "use strict";
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -45,7 +46,7 @@ module.exports = {
         defaultValue: "low",
       },
       last_login_at: {
-        type: Sequelize.TIME,
+        type: Sequelize.DATE,
       },
       verification_token: {
         type: Sequelize.STRING,
