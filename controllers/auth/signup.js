@@ -40,7 +40,6 @@ const signupController = async (req, res) => {
       text: `Please verify your email by clicking the following link: ${config.BASE_URL}/verify-email?token=${verificationToken}`,
     };
 
-    console.log("mailOptions: ", mailOptions, "newUser:", newUser);
     transporter.sendMail(mailOptions, async (error) => {
       if (error) {
         console.error("Email Error:", error);
