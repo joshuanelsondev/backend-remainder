@@ -1,5 +1,6 @@
 const db = require("../../models");
 const crypto = require("crypto");
+const sendVerificationEmail = require("../../utils/sendVerificationEmail");
 
 const resendVerification = async (req, res) => {
   const { email } = req.body;
