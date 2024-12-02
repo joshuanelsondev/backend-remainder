@@ -4,13 +4,13 @@ const verifyEmailController = async (req, res) => {
   const { token } = req.query;
 
   if (!token) {
-    return res.status(400).json({ message: "Token is required" });
+    return res.status(400).json({ message: "Verification token is required" });
   }
 
   try {
     const user = await db.User.findOne({ where: { verificationToken: token } });
     if (!user) {
-      return res.status(400).json({ message: "Invalid token" });
+      return res.status(400).json({ message: "Invalid or expired token" });
     }
 
     user.isVerified = true;
