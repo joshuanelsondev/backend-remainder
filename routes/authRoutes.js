@@ -8,6 +8,7 @@ const registerPasskeyController = require("../controllers/auth/registerPasskey")
 const verifyRegistrationController = require("../controllers/auth/verifyRegistration");
 const generateAuthOptionsController = require("../controllers/auth/generateAuthOptions");
 const verifyPasskeyController = require("../controllers/auth/verifyPasskey");
+const validateLogin = require("../utils/validateLogin");
 
 // Import middleware and utils
 const createRateLimiter = require("../utils/rateLimiter");
@@ -22,7 +23,7 @@ const loginRateLimiter = createRateLimiter(15 * 60 * 1000, 10);
 
 // Routes
 router.post("/signup", signupRateLimiter, validateSignup, signupController);
-router.post("/login", loginRateLimiter, loginController);
+router.post("/login", loginRateLimiter, validateLogin, loginController);
 router.post("/register-passkey", registerPasskeyController);
 router.post("/verify-registration", verifyRegistrationController);
 router.get("/verify-email", verifyEmailController);
