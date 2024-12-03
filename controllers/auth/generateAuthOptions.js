@@ -18,7 +18,7 @@ const generateAuthOptions = async (req, res) => {
           type: "public-key",
         },
       ],
-      userVerification: "preferred",
+      userVerification: "required",
     });
 
     user.challenge = options.challenge;
