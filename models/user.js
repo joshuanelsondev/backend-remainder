@@ -1,5 +1,5 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -28,11 +28,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-      },
       email: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -52,9 +47,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       riskPreference: {
         type: DataTypes.ENUM,
-        values: ["low", "high"],
+        values: ['low', 'high'],
         allowNull: false,
-        defaultValue: "low",
+        defaultValue: 'low',
       },
       lastLoginAt: {
         type: DataTypes.DATE,
@@ -82,8 +77,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "User",
-      tableName: "users",
+      modelName: 'User',
+      tableName: 'users',
       underscored: true,
       timestamps: true,
     }
