@@ -20,6 +20,9 @@ const loginController = async (req, res) => {
       return res.status(403).json({ message: "Email not verified" });
     }
 
+    user.lastLoginAt = new Date();
+    await user.save();
+
     const token = generateToken({ id: user.id });
 
     res.status(200).json({
@@ -31,6 +34,7 @@ const loginController = async (req, res) => {
         lastName: user.lastName,
         email: user.email,
         username: user.username,
+        lastLoginAt: user.lastLoginAt,
       },
     });
   } catch (error) {

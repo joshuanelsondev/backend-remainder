@@ -24,7 +24,7 @@ const verifyRegistration = async (req, res) => {
       user.webauthnid = verification.registrationInfo.credentialID;
       user.webauthnpublickey =
         verification.registrationInfo.credentialPublicKey;
-      user.authCounter = verification.registrationInfo.Counter;
+      user.authCounter = verification.registrationInfo.counter;
       user.challenge = null;
       await user.save();
 
