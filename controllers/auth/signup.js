@@ -1,18 +1,17 @@
-const bcrypt = require("bcryptjs");
-const crypto = require("crypto");
-const db = require("../../models");
-const sendVerificationEmail = require("../../utils/sendVerificationEmail");
+const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
+const db = require('../../models');
+const sendVerificationEmail = require('../../utils/sendVerificationEmail');
 
 const signupController = async (req, res) => {
   try {
-    const { firstName, lastName, username, email, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const verificationToken = crypto.randomBytes(32).toString("hex");
+    const verificationToken = crypto.randomBytes(32).toString('hex');
 
     const newUser = await db.User.create({
       firstName,
       lastName,
-      username,
       email,
       password: hashedPassword,
       verificationToken,
@@ -23,10 +22,10 @@ const signupController = async (req, res) => {
     await sendVerificationEmail(newUser);
 
     res.status(201).json({
-      message: "User created successfully. Please verify your email.",
+      message: 'User created successfully. Please verify your email.',
     });
   } catch (error) {
-    res.status(500).json({ message: "Error creating user", error });
+    res.status(500).json({ message: 'Error creating user', error });
   }
 };
 
