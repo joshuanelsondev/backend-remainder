@@ -1,4 +1,5 @@
 const db = require("../../models");
+const { generateToken } = require("../../utils/token");
 
 const verifyEmailController = async (req, res) => {
   const { token } = req.query;
@@ -17,9 +18,13 @@ const verifyEmailController = async (req, res) => {
     user.verificationToken = null;
     await user.save();
 
+    const jwtToken = generateToken({ id: user.id });
+
     console.log(`User ${user.id} verified successfully`);
 
-    res.status(200).json({ message: "Email verified successfully" });
+    res
+      .status(200)
+      .json({ message: "Email verified successfully", token: jwtToken });
   } catch (error) {
     console.error("Error verifying email: ", error);
 
