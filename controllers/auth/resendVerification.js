@@ -24,8 +24,6 @@ const resendVerification = async (req, res) => {
     user.verificationToken = verificationToken;
     await user.save();
 
-    // Send the email
-    // Replace this with your actual email-sending logic
     await sendVerificationEmail(email, verificationToken);
 
     res.status(200).json({ message: "Verification email sent." });

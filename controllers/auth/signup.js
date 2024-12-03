@@ -9,7 +9,6 @@ const signupController = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const verificationToken = crypto.randomBytes(32).toString("hex");
 
-    // Create user
     const newUser = await db.User.create({
       firstName,
       lastName,
@@ -24,7 +23,7 @@ const signupController = async (req, res) => {
     await sendVerificationEmail(newUser);
 
     res.status(201).json({
-      message: "User creted successfully. Please verify your email.",
+      message: "User created successfully. Please verify your email.",
     });
   } catch (error) {
     res.status(500).json({ message: "Error creating user", error });

@@ -15,7 +15,7 @@ const sendVerificationEmail = async (user) => {
     from: process.env.EMAIL,
     to: user.email,
     subject: "Email Verification",
-    text: `Please verify your email by clicking the following link: ${config.BASE_URL}/verify-email?token=${user.verificationToken}`,
+    text: `Please verify your email by clicking the following link: ${config.BASE_URL}/auth/verify-email?token=${user.verificationToken}`,
   };
 
   try {
