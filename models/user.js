@@ -41,6 +41,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         unique: true,
       },
+      phoneNumber: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        unique: true,
+        validate: {
+          is: /^\+?[1-9]\d{1,14}$/,
+        },
+      },
       dateOfBirth: {
         type: DataTypes.DATE,
         allowNull: true,
