@@ -23,6 +23,14 @@ module.exports = {
         allowNull: true,
         unique: true,
       },
+      phone_number: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        unique: true,
+        validate: {
+          is: /^\+?[1-9]\d{1,14}$/,
+        },
+      },
       date_of_birth: {
         type: Sequelize.DATE,
         allowNull: true,
