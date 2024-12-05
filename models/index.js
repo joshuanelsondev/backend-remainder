@@ -5,8 +5,7 @@ const path = require("path");
 const Sequelize = require("sequelize");
 const process = require("process");
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/../config/config.js");
+const config = require("../config/config");
 const db = {};
 
 let sequelize;
@@ -17,8 +16,7 @@ if (!config.url) {
 
 sequelize = new Sequelize(config.url, {
   dialect: config.dialect || "postgres",
-  logging: console.logging,
-  dialectOptions: config.dialectOptions,
+  logging: config.logging || false,
 });
 
 fs.readdirSync(__dirname)
@@ -27,7 +25,7 @@ fs.readdirSync(__dirname)
       file.indexOf(".") !== 0 &&
       file !== basename &&
       file.slice(-3) === ".js" &&
-      file.indexOf(".test.js") === -1
+      !file.includes(".test.js")
     );
   })
   .forEach((file) => {

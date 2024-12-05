@@ -1,23 +1,20 @@
 const path = require("path");
 const dotenv = require("dotenv");
+const process = require("process");
 
-const env = process.env.NODE_ENV || "development";
+const envFile = `.env.${process.env.NODE_ENV || "development"}`;
+const envFilePath = path.resolve(__dirname, "..", envFile);
+const result = dotenv.config({ path: envFilePath });
 
-let envFilePath;
-switch (env) {
-  case "production":
-    envFilePath = path.resolve(__dirname, "..", ".env.production");
-    break;
-  case "staging":
-    envFilePath = path.resolve(__dirname, "..", ".env.staging");
-    break;
-  case "development":
-  default:
-    envFilePath = path.resolve(__dirname, "..", ".env");
-    break;
+if (result.error) {
+  console.warn(`Warning: No .env file found at ${envFilePath}`);
 }
 
-const result = dotenv.config({ path: envFilePath });
+if (!process.env.DATABASE_URL) {
+  console.warn(
+    "Warning: DATABASE_URL is not defined in the environment variables."
+  );
+}
 
 if (result.error) {
   console.warn(`Warning: No .env file found at ${envFilePath}`);
@@ -32,6 +29,12 @@ if (!process.env.DATABASE_URL) {
 const baseConfig = {
   url: process.env.DATABASE_URL,
   dialect: "postgres",
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
   EMAIL: process.env.EMAIL,
   EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
   JWT_SECRET: process.env.JWT_SECRET,
@@ -46,25 +49,13 @@ const environmentConfigs = {
   },
   staging: {
     logging: false,
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false,
-      },
-    },
   },
   production: {
     logging: false,
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false,
-      },
-    },
   },
 };
 
 module.exports = {
   ...baseConfig,
-  ...environmentConfigs[env],
+  ...environmentConfigs[envFile],
 };
