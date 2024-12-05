@@ -1,7 +1,6 @@
 const { Sequelize } = require("sequelize");
 const config = require("./config");
 
-const env = process.env.NODE_ENV || "development";
 const { url, dialect, logging, dialectOptions } = config;
 
 const sequelize = new Sequelize(url, {
