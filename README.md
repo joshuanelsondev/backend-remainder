@@ -76,7 +76,7 @@ To set up the backend locally:
 
 ## API Routes
 
-The API will has the following endpoints:
+The API has the following endpoints:
 
 - **Users**: `/api/users` - Manage user registration and authentication.
 - **Incomes**: `/api/incomes` - Add, update, delete, and view incomes.
