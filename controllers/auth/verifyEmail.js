@@ -1,34 +1,28 @@
+const { verifyToken } = require("../../utils/token");
+const process = require("process");
 const db = require("../../models");
-const { generateToken } = require("../../utils/token");
 
 const verifyEmailController = async (req, res) => {
-  const { token } = req.query;
-
-  if (!token) {
-    return res.status(400).json({ message: "Verification token is required" });
-  }
+  const { token } = req.params;
+  console.log("Token received:", token);
 
   try {
-    const user = await db.User.findOne({ where: { verificationToken: token } });
+    const decoded = verifyToken(token);
+    console.log("Decoded token:", decoded);
+
+    const user = await db.User.findOne({ where: { id: decoded.id } });
+
     if (!user) {
-      return res.status(400).json({ message: "Invalid or expired token" });
+      return res.status(404).send("User not found");
     }
 
     user.isVerified = true;
-    user.verificationToken = null;
     await user.save();
 
-    const jwtToken = generateToken({ id: user.id });
-
-    console.log(`User ${user.id} verified successfully`);
-
-    res
-      .status(200)
-      .json({ message: "Email verified successfully", token: jwtToken });
+    res.redirect(`${process.env.FRONTEND_URL}/verification-success`);
   } catch (error) {
-    console.error("Error verifying email: ", error);
-
-    res.status(500).json({ message: "Error verifying email", error });
+    console.error(error);
+    res.redirect(`${process.env.FRONTEND_URL}/verification-failed`);
   }
 };
 
