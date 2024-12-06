@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         allowNull: true,
       },
-      passwordHash: {
+      password: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
