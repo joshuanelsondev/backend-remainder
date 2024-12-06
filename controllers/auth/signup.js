@@ -1,23 +1,26 @@
 const bcrypt = require("bcryptjs");
-const crypto = require("crypto");
 const db = require("../../models");
+const { generateToken } = require("../../utils/token");
 const sendVerificationEmail = require("../../utils/sendVerificationEmail");
 
 const signupController = async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const verificationToken = crypto.randomBytes(32).toString("hex");
 
     const newUser = await db.User.create({
       firstName,
       lastName,
       email,
       password: hashedPassword,
-      verificationToken,
       isVerified: false,
       lastLoginAt: new Date(),
     });
+
+    const verificationToken = generateToken({ id: newUser.id });
+
+    newUser.verificationToken = verificationToken;
+    await newUser.save();
 
     await sendVerificationEmail(newUser);
 

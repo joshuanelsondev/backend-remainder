@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 const db = require("../models");
-const config = require("../config/config");
+const process = require("process");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -11,11 +11,19 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendVerificationEmail = async (user) => {
+  const { verificationToken } = user;
+
+  if (!verificationToken) {
+    throw new Error("Verification token is missing for the user");
+  }
+
+  const verificationLink = `${process.env.BACKEND_URL}/auth/verify/${verificationToken}`;
+
   const mailOptions = {
     from: process.env.EMAIL,
     to: user.email,
     subject: "Email Verification",
-    text: `Please verify your email by clicking the following link: ${config.BASE_URL}/auth/verify-email?token=${user.verificationToken}`,
+    text: `Please verify your email by clicking the following link: ${verificationLink}`,
   };
 
   try {
