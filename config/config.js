@@ -29,12 +29,6 @@ if (!process.env.DATABASE_URL) {
 const baseConfig = {
   url: process.env.DATABASE_URL,
   dialect: "postgres",
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false,
-    },
-  },
   EMAIL: process.env.EMAIL,
   EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
   JWT_SECRET: process.env.JWT_SECRET,
@@ -46,12 +40,27 @@ const baseConfig = {
 const environmentConfigs = {
   development: {
     logging: console.log,
+    dialectOptions: {
+      ssl: false,
+    },
   },
   staging: {
     logging: false,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
   },
   production: {
     logging: false,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
   },
 };
 
