@@ -4,6 +4,7 @@ const express = require("express");
 const signupController = require("../controllers/auth/signup");
 const loginController = require("../controllers/auth/login");
 const verifyEmailController = require("../controllers/auth/verifyEmail");
+const verifyTokenController = require("../controllers/auth/verifyToken");
 const registerPasskeyController = require("../controllers/auth/registerPasskey");
 const verifyRegistrationController = require("../controllers/auth/verifyRegistration");
 const generateAuthOptionsController = require("../controllers/auth/generateAuthOptions");
@@ -27,6 +28,7 @@ router.post("/login", loginRateLimiter, validateLogin, loginController);
 router.post("/register-passkey", registerPasskeyController);
 router.post("/verify-registration", verifyRegistrationController);
 router.get("/verify-email", verifyEmailController);
+router.get("/verify/:token", verifyTokenController);
 
 // Authentication Routes
 router.post(
