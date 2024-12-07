@@ -1,5 +1,7 @@
-const { server } = require("@passwordless-id/webauthn");
-const db = require("../../models");
+const { server } = require('@passwordless-id/webauthn');
+const db = require('../../models');
+const crypto = require('crypto');
+const validateEmail = require('../../utils/validateEmail');
 
 const generateAuthOptions = async (req, res) => {
   try {
@@ -7,18 +9,18 @@ const generateAuthOptions = async (req, res) => {
     const user = await db.User.findOne({ where: { email } });
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: 'User not found' });
     }
 
     const options = await server.generateAuthenticationOptions({
-      challenge: crypto.randomBytes(32).toString("base64url"),
+      challenge: crypto.randomBytes(32).toString('base64url'),
       allowCredentials: [
         {
           id: user.webauthnid,
-          type: "public-key",
+          type: 'public-key',
         },
       ],
-      userVerification: "required",
+      userVerification: 'required',
     });
 
     user.challenge = options.challenge;
@@ -28,7 +30,7 @@ const generateAuthOptions = async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Error generating authentication options", error });
+      .json({ message: 'Error generating authentication options', error });
   }
 };
 
