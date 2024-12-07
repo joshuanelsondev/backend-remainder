@@ -27,8 +27,6 @@ const signupController = async (req, res) => {
 
     res.status(201).json({
       message: 'User created successfully. Please verify your email.',
-      verificationToken,
-      registrationOptions: webAuthnOptions,
     });
   } catch (error) {
     console.error('Error in signupController:', error);
