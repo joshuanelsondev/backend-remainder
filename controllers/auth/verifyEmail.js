@@ -4,11 +4,9 @@ const db = require("../../models");
 
 const verifyEmailController = async (req, res) => {
   const { token } = req.params;
-  console.log("Token received:", token);
 
   try {
     const decoded = verifyToken(token);
-    console.log("Decoded token:", decoded);
 
     const user = await db.User.findOne({ where: { id: decoded.id } });
 
