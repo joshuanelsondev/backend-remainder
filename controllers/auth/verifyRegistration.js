@@ -5,34 +5,36 @@ const normalizeChallenge = require("../../utils/challengeUtils");
 
 const verifyRegistration = async (req, res) => {
   const { credential, email } = req.body;
+  const user = await db.User.findOne({ where: { email } });
   try {
-    const user = await db.User.findOne({ where: { email } });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const normalizedChallenge = normalizeChallenge(user.challenge);
-
-    const verification = await server.verifyRegistrationResponse({
+    const verification = await server.verifyRegistration({
       response: credential,
-      normalizedChallenge,
-      expectedOrigin: config.EXPECTED_ORIGIN,
-      expectedRPID: config.EXPECTED_RPID,
+      expectedChallenge: user.challenge,
+      expectedOrigin: process.env.EXPECTED_ORIGIN,
+      expectedRPID: process.env.EXPECTED_RPID,
     });
 
-    if (verification.verified) {
-      user.webauthnid = verification.registrationInfo.credentialID;
-      user.webauthnpublickey =
-        verification.registrationInfo.credentialPublicKey;
-      user.authCounter = verification.registrationInfo.counter;
-      user.challenge = null;
-      await user.save();
-
-      res.status(200).json({ message: "Passkey registered successfully" });
-    } else {
-      res.status(400).json({ message: "Invalid registration response" });
+    if (!verification.verified) {
+      console.error("Verification failed:", verification.error);
+      return res.status(400).json({ message: "Invalid registration response" });
     }
+
+    user.webauthnid = verification.credential.id;
+    user.webauthnpublickey = verification.credential.publicKey;
+    user.authCounter = verification.authenticator.counter;
+    user.challenge = null;
+    user.mfaEnabled = true;
+    await user.save();
+
+    res
+      .status(200)
+      .json({ message: "MFA registration completed successfully" });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Error verifying registration", error });
   }
 };

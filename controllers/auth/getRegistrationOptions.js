@@ -4,7 +4,6 @@ const validateEmail = require("../../utils/validateEmail");
 
 const getRegistrationOptionsController = async (req, res) => {
   const { email } = req.query;
-  console.log("EMAIL:", email);
 
   try {
     if (!validateEmail(email)) {
@@ -41,9 +40,9 @@ const getRegistrationOptionsController = async (req, res) => {
       attestation: "none",
     };
 
-    user.challenge = options.challenge;
+    user.challenge = challenge;
     await user.save();
-
+    console.log("Registration Options:", options);
     res.status(200).json(options);
   } catch (error) {
     console.error("Error in getRegistrationOptions:", error);
