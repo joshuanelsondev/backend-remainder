@@ -1,39 +1,26 @@
-const db = require("../models");
-const DisposableIncome = db.DisposableIncome;
+const { Income, Expense } = require("../models");
 
-const createDisposableIncome = async (data) => {
-  return await DisposableIncome.create(data);
-};
-
-const getDisposableIncome = async (id) => {
-  return await DisposableIncome.findOne({
-    where: { id },
-  });
-};
-
-const getAllDisposableIncomes = async (userId) => {
-  return await DisposableIncome.findAll({
-    where: {
-      userId,
-    },
-  });
-};
-
-const deleteDisposableIncome = async (id) => {
-  const deleted = await DisposableIncome.destroy({
-    where: { id },
+const calculateDisposableIncome = async (userId) => {
+  const totalIncome = await Income.sum("amount", {
+    where: { userId },
   });
 
-  if (deleted) {
-    return true;
-  }
+  const totalExpenses = await Expense.sum("amount", {
+    where: { userId },
+  });
 
-  throw new Error("DisposableIncome not found");
+  const disposableIncome = (totalIncome || 0) - (totalExpenses || 0);
+
+  const result = await DisposableIncome.create({
+    userId,
+    totalIncome: totalIncome || 0,
+    totalExpenses: totalExpenses || 0,
+    disposableIncome,
+  });
+
+  return result;
 };
 
 module.exports = {
-  createDisposableIncome,
-  getDisposableIncome,
-  getAllDisposableIncomes,
-  deleteDisposableIncome,
+  calculateDisposableIncome,
 };

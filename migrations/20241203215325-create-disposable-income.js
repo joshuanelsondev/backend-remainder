@@ -9,30 +9,31 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
-      user_id: {
+      userId: {
         type: Sequelize.UUID,
         allowNull: false,
         references: {
           model: "users",
           key: "id",
         },
+        onDelete: "CASCADE",
       },
-      total_income: {
-        type: Sequelize.DECIMAL,
+      totalIncome: {
+        type: Sequelize.DECIMAL(15, 2),
         allowNull: false,
         defaultValue: 0,
       },
-      total_expenses: {
-        type: Sequelize.DECIMAL,
+      totalExpenses: {
+        type: Sequelize.DECIMAL(15, 2),
         allowNull: false,
         defaultValue: 0,
       },
-      disposable_income: {
-        type: Sequelize.DECIMAL,
+      disposableIncome: {
+        type: Sequelize.DECIMAL(15, 2),
         allowNull: false,
         defaultValue: 0,
       },
-      calculated_at: {
+      calculatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.NOW,
@@ -46,7 +47,17 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+
+    await queryInterface.addIndex(
+      "disposable_incomes",
+      ["userId", "calculatedAt"],
+      {
+        unique: true,
+        name: "idx_userId_calculatedAt",
+      }
+    );
   },
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("disposable_incomes");
   },

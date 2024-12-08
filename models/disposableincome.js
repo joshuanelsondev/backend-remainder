@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       DisposableIncome.belongsTo(models.User, {
         foreignKey: "userId",
-        as: "users",
+        as: "user",
       });
     }
   }
@@ -21,21 +21,34 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         allowNull: false,
         references: { model: "users", key: "id" },
+        onDelete: "CASCADE",
       },
       totalIncome: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(15, 2),
         allowNull: false,
         defaultValue: 0,
+        validate: {
+          isDecimal: true,
+          min: 0,
+        },
       },
       totalExpenses: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(15, 2),
         allowNull: false,
         defaultValue: 0,
+        validate: {
+          isDecimal: true,
+          min: 0,
+        },
       },
       disposableIncome: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(15, 2),
         allowNull: false,
         defaultValue: 0,
+        validate: {
+          isDecimal: true,
+          min: 0,
+        },
       },
       calculatedAt: {
         type: DataTypes.DATE,
@@ -49,7 +62,18 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "disposable_incomes",
       underscored: true,
       timestamps: true,
+      indexes: [
+        {
+          unique: true,
+          fields: ["userId", "calculatedAt"],
+        },
+      ],
     }
   );
+
+  DisposableIncome.beforeSave((instance) => {
+    instance.disposableIncome = instance.totalIncome - instance.totalExpenses;
+  });
+
   return DisposableIncome;
 };

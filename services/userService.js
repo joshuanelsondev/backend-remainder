@@ -7,7 +7,7 @@ const getUser = async (id) => {
   });
 };
 
-const updateUser = async (id, update) => {
+const updateUser = async (id, data) => {
   const [updated] = await User.update(data, { where: { id } });
   if (updated) {
     return await User.findOne({
