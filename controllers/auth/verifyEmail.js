@@ -1,6 +1,6 @@
-const { verifyToken } = require('../../utils/token');
-const process = require('process');
-const db = require('../../models');
+const { generateToken, verifyToken } = require("../../utils/token");
+const process = require("process");
+const db = require("../../models");
 
 const verifyEmailController = async (req, res) => {
   const { token } = req.params;
@@ -11,16 +11,20 @@ const verifyEmailController = async (req, res) => {
     const user = await db.User.findOne({ where: { id: decoded.id } });
 
     if (!user) {
-      return res.status(404).send('User not found');
+      return res.status(404).send("User not found");
     }
 
     user.isVerified = true;
     user.verificationToken = null;
     await user.save();
 
-    res.redirect(`${process.env.FRONTEND_URL}/mfa-setup?email=${user.email}`);
+    const newToken = generateToken({ id: user.id });
+
+    res.redirect(
+      `${process.env.FRONTEND_URL}/mfa-setup?email=${user.email}&token=${newToken}`
+    );
   } catch (error) {
-    console.error('Error verifying email:', error);
+    console.error("Error verifying email:", error);
     res.redirect(`${process.env.FRONTEND_URL}/verification-failed`);
   }
 };
