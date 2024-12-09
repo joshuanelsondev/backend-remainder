@@ -11,9 +11,11 @@ const verifyRegistration = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    const normalizedChallenge = normalizeChallenge(user.challenge);
+
     const verification = await server.verifyRegistration({
       response: credential,
-      expectedChallenge: user.challenge,
+      expectedChallenge: normalizedChallenge,
       expectedOrigin: process.env.EXPECTED_ORIGIN,
       expectedRPID: process.env.EXPECTED_RPID,
     });

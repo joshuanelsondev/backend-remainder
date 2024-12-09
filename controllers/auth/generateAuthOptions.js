@@ -15,6 +15,8 @@ const generateAuthOptions = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    const challenge = crypto.randomBytes(32).toString("base64url");
+
     const options = {
       challenge,
       rpId: process.env.RP_ID || "remainderinvest.netlify.app",
