@@ -1,5 +1,5 @@
 const normalizeChallenge = (input) => {
-  return input.replace(/-/g, "+").replace(/_/g, "/").replace(/=*$/, "");
+  return input.replace(/=*$/, "").replace(/\+/g, "-").replace(/\//g, "_");
 };
 
 module.exports = normalizeChallenge;

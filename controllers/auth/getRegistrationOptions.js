@@ -3,9 +3,8 @@ const db = require("../../models");
 const validateEmail = require("../../utils/validateEmail");
 
 const getRegistrationOptionsController = async (req, res) => {
-  const { email } = req.query;
-
   try {
+    const { email } = req.query;
     if (!validateEmail(email)) {
       return res.status(400).json({ message: "Invalid email format" });
     }
@@ -42,7 +41,6 @@ const getRegistrationOptionsController = async (req, res) => {
 
     user.challenge = challenge;
     await user.save();
-    console.log("Registration Options:", options);
     res.status(200).json(options);
   } catch (error) {
     console.error("Error in getRegistrationOptions:", error);
