@@ -1,5 +1,5 @@
-const globals = require("globals");
-const pluginJs = require("@eslint/js");
+import globals from "globals";
+import pluginJs from "@eslint/js";
 
 /** @type {import('eslint').Linter.Config[]} */
 module.exports = [
@@ -7,9 +7,9 @@ module.exports = [
     files: ["**/*.js"],
     languageOptions: {
       ecmaVersion: 2015,
-      sourceType: "commonjs",
-      globals: globals.browser
-    }
+      sourceType: "module",
+      globals: globals.browser,
+    },
   },
-  pluginJs.configs.recommended
+  pluginJs.configs.recommended,
 ];

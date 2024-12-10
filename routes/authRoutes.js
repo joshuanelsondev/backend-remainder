@@ -7,6 +7,8 @@ const verifyEmailController = require("../controllers/auth/verifyEmail");
 const verifyRegistrationController = require("../controllers/auth/verifyRegistration");
 const generateAuthOptionsController = require("../controllers/auth/generateAuthOptions");
 const getRegistrationOptionsController = require("../controllers/auth/getRegistrationOptions");
+const registerOptionsController = require("../controllers/auth/registerOptions");
+const registerController = require("../controllers/auth/register");
 const validateLogin = require("../utils/validateLogin");
 
 // Middleware and utils
@@ -32,5 +34,8 @@ router.post(
 );
 router.post("/verify-registration", verifyRegistrationController);
 router.get("/get-registration-options", getRegistrationOptionsController);
+
+router.post("/register-options", registerOptionsController);
+router.post("/register", registerController);
 
 module.exports = router;
