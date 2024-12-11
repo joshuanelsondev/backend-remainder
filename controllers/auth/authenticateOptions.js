@@ -1,8 +1,7 @@
 const { server } = require("@passwordless-id/webauthn");
 const db = require("../../models");
-const crypto = require("crypto");
 
-const registerOptionsController = async (req, res) => {
+const authOptionsController = async (req, res) => {
   const { email } = req.body;
 
   const user = await db.User.findOne({ where: { email } });
@@ -10,15 +9,8 @@ const registerOptionsController = async (req, res) => {
     return res.status(404).json({ message: "User not found" });
   }
 
-  const challenge = crypto.randomBytes(32).toString("base64url");
-
   const options = {
-    challenge,
-    user: {
-      id: user.id,
-      name: email,
-      displayName: email,
-    },
+    challenge: server.generateChallenge(),
   };
 
   user.challenge = options.challenge;
@@ -27,4 +19,4 @@ const registerOptionsController = async (req, res) => {
   res.status(200).json(options);
 };
 
-module.exports = registerOptionsController;
+module.exports = authOptionsController;

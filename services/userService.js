@@ -1,5 +1,6 @@
 const db = require("../models");
 const User = db.User;
+const sanitizeData = require("../utils/sanitize");
 
 const getUser = async (id) => {
   return await User.findOne({
@@ -8,7 +9,8 @@ const getUser = async (id) => {
 };
 
 const updateUser = async (id, data) => {
-  const [updated] = await User.update(data, { where: { id } });
+  const sanitizedData = sanitizeData(data);
+  const [updated] = await User.update(sanitizedData, { where: { id } });
   if (updated) {
     return await User.findOne({
       where: { id },

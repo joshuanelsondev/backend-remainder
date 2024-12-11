@@ -6,6 +6,8 @@ const loginController = require("../controllers/auth/login");
 const verifyEmailController = require("../controllers/auth/verifyEmail");
 const verifyRegistrationController = require("../controllers/auth/verifyRegistration");
 const generateAuthOptionsController = require("../controllers/auth/generateAuthOptions");
+const authOptionsController = require("../controllers/auth/authenticateOptions");
+const authenticateController = require("../controllers/auth/authenticate");
 const getRegistrationOptionsController = require("../controllers/auth/getRegistrationOptions");
 const registerOptionsController = require("../controllers/auth/registerOptions");
 const registerController = require("../controllers/auth/register");
@@ -32,6 +34,10 @@ router.post(
   authMiddleware,
   generateAuthOptionsController
 );
+
+router.post("/auth-options", authOptionsController);
+router.post("/authenticate", authenticateController);
+
 router.post("/verify-registration", verifyRegistrationController);
 router.get("/get-registration-options", getRegistrationOptionsController);
 
