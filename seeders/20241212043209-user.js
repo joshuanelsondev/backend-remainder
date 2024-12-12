@@ -7,15 +7,16 @@ module.exports = {
       "users",
       [
         {
-          id: "c9d19c8a-48c4-4a7b-8d8d-123456789abc",
-          first_name: "Test",
+          id: "c9d19c8a-48c4-4a7b-8d8d-123456789def",
+          first_name: "Admin",
           last_name: "User",
-          email: "testuser@example.com",
-          phone_number: "+1234567890",
-          date_of_birth: "1990-01-01",
+          email: "admin@example.com",
+          phone_number: "+1234567891",
+          date_of_birth: "1985-01-01",
           password: "$2b$10$abcdefghijklmnopqrstuvwx",
           is_verified: true,
           mfa_enabled: false,
+          is_admin: true,
           risk_preference: "low",
           failed_login_attempts: 0,
           account_locked: false,
@@ -36,7 +37,7 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete("users", {
-      email: "testuser@example.com",
+      email: "admin@example.com",
     });
   },
 };
