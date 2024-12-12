@@ -50,6 +50,11 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
       },
+      is_admin: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
       risk_preference: {
         type: Sequelize.ENUM("low", "high"),
         allowNull: false,
