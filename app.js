@@ -5,7 +5,11 @@ const userRoutes = require("./routes/userRoutes");
 const incomeRoutes = require("./routes/incomeRoutes");
 const expenseRoutes = require("./routes/expenseRoutes");
 const disposableIncomeRoutes = require("./routes/disposableIncomeRoutes");
-const authenticateUser = require("./middleware/authenticateUser");
+const {
+  authenticateUser,
+  authorizeAdmin,
+} = require("./middleware/authenticateUser");
+const generateAdminTokenRoute = require("./routes/admin-token");
 
 const app = express();
 
@@ -16,6 +20,11 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Welcome to Remainder");
 });
+
+// Retrieve token for admin
+if (process.env.NODE_ENV === "development") {
+  app.use("/dev", authorizeAdmin, generateAdminTokenRoute);
+}
 
 // Authentication routes for signup and login
 app.use("/auth", authRoutes);
