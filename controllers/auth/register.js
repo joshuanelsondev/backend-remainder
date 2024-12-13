@@ -18,6 +18,7 @@ const registerController = async (req, res) => {
     if (verification.userVerified) {
       user.webauthnid = verification.credential.id;
       user.webauthnpublickey = verification.credential.publicKey;
+      user.mfaEnabled = true;
       user.challenge = null;
       await user.save();
 
