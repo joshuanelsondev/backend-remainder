@@ -4,12 +4,9 @@ const express = require("express");
 const signupController = require("../controllers/auth/signup");
 const loginController = require("../controllers/auth/login");
 const verifyEmailController = require("../controllers/auth/verifyEmail");
-const verifyRegistrationController = require("../controllers/auth/verifyRegistration");
-const generateAuthOptionsController = require("../controllers/auth/generateAuthOptions");
 const authOptionsController = require("../controllers/auth/authenticateOptions");
 const authenticateController = require("../controllers/auth/authenticate");
-const getRegistrationOptionsController = require("../controllers/auth/getRegistrationOptions");
-const registerOptionsController = require("../controllers/auth/registerOptions");
+const getChallengeController = require("../controllers/auth/getChallenge");
 const registerController = require("../controllers/auth/register");
 const validateLogin = require("../utils/validateLogin");
 
@@ -29,19 +26,10 @@ router.post("/signup", signupRateLimiter, validateSignup, signupController);
 router.post("/login", loginRateLimiter, validateLogin, loginController);
 router.get("/verify/:token", verifyEmailController);
 
-router.post(
-  "/generate-auth-options",
-  authMiddleware,
-  generateAuthOptionsController
-);
-
 router.post("/auth-options", authOptionsController);
 router.post("/authenticate", authenticateController);
 
-router.post("/verify-registration", verifyRegistrationController);
-router.get("/get-registration-options", getRegistrationOptionsController);
-
-router.post("/register-options", registerOptionsController);
+router.post("/challenge", getChallengeController);
 router.post("/register", registerController);
 
 module.exports = router;
