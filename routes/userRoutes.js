@@ -14,7 +14,7 @@ user.patch("/me", authenticateUser, updateUserController);
 user.delete("/me", authenticateUser, deleteUserController);
 
 // Admin-only routes
-user.get("/:id", authenticateUser, authorizeAdmin, getUserController);
-user.delete("/:id", authenticateUser, authorizeAdmin, deleteUserController);
+user.get("/:id", authorizeAdmin, getUserController);
+user.delete("/:id", authorizeAdmin, deleteUserController);
 
 module.exports = user;
