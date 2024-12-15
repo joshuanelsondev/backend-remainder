@@ -5,10 +5,8 @@ const userRoutes = require("./routes/userRoutes");
 const incomeRoutes = require("./routes/incomeRoutes");
 const expenseRoutes = require("./routes/expenseRoutes");
 const disposableIncomeRoutes = require("./routes/disposableIncomeRoutes");
-const {
-  authenticateUser,
-  authorizeAdmin,
-} = require("./middleware/authenticateUser");
+const authenticateUser = require("./middleware/authenticateUser");
+const authorizeAdmin = require("./middleware/authenticateUser");
 const generateAdminTokenRoute = require("./routes/admin-token");
 
 const app = express();

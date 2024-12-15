@@ -24,11 +24,11 @@ const loginRateLimiter = createRateLimiter(15 * 60 * 1000, 10);
 // Routes
 router.post("/signup", signupRateLimiter, validateSignup, signupController);
 router.post("/login", loginRateLimiter, validateLogin, loginController);
-router.get("/verify/:token", verifyToken, verifyEmailController);
+router.get("/verify/:token", verifyEmailController);
 
-router.post("/auth-options", verifyToken, authOptionsController);
-router.post("/authenticate", verifyToken, authenticateController);
-router.post("/challenge", verifyToken, getChallengeController);
-router.post("/register", verifyToken, registerController);
+router.post("/auth-options", authOptionsController);
+router.post("/authenticate", authenticateController);
+router.post("/challenge", getChallengeController);
+router.post("/register", registerController);
 
 module.exports = router;

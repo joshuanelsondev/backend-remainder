@@ -21,7 +21,12 @@ const getUserController = async (req, res) => {
 
     const safeUserData = isAdmin
       ? user
-      : { id: user.id, name: user.name, email: user.email };
+      : {
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+        };
 
     return res.status(200).json(safeUserData);
   } catch (error) {
@@ -34,8 +39,8 @@ const updateUserController = async (req, res) => {
   const updateData = req.body;
 
   try {
-    const user = await updateUser(id, updateData);
-    return res.status(200).json(user);
+    const updatedUser = await updateUser(id, updateData);
+    return res.status(200).json(updatedUser);
   } catch (error) {
     if (error.message === "User not found") {
       return res.status(404).json({ error: error.message });
@@ -45,10 +50,25 @@ const updateUserController = async (req, res) => {
 };
 
 const deleteUserController = async (req, res) => {
-  const { id } = req.params;
+  const { userId } = req.params;
+  const { id, isAdmin } = req.user;
 
   try {
-    await deleteUser(id);
+    // Restrict non-admins from deleting other users
+    if (userId && !isAdmin) {
+      return res
+        .status(403)
+        .json({ error: "Admin privileges required to delete other users." });
+    }
+
+    const targetUserId = userId || id;
+
+    const deleted = await deleteUser(targetUserId);
+
+    if (!deleted) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
     return res.status(204).send();
   } catch (error) {
     if (error.message === "User not found") {

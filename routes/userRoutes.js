@@ -1,6 +1,7 @@
 const express = require("express");
 const user = express.Router();
-const authenticateUser = require("../middleware");
+const authenticateUser = require("../middleware/authenticateUser");
+const authorizeAdmin = require("../middleware/authorizeAdmin");
 const {
   getUserController,
   updateUserController,
@@ -9,16 +10,11 @@ const {
 
 // Current user routes
 user.get("/me", authenticateUser, getUserController);
-user.patch("/me", authenticateUser, updateCurrentUserController);
-user.delete("/me", authenticateUser, deleteCurrentUserController);
+user.patch("/me", authenticateUser, updateUserController);
+user.delete("/me", authenticateUser, deleteUserController);
 
 // Admin-only routes
 user.get("/:id", authenticateUser, authorizeAdmin, getUserController);
-user.delete(
-  "/:id",
-  authenticateUser,
-  authorizeAdmin,
-  deleteCurrentUserController
-);
+user.delete("/:id", authenticateUser, authorizeAdmin, deleteUserController);
 
 module.exports = user;
