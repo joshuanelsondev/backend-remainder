@@ -1,14 +1,29 @@
 const { getUser, updateUser, deleteUser } = require("../services/userService");
 
 const getUserController = async (req, res) => {
-  const { id } = req.params;
+  const { userId } = req.params;
+  const { id, isAdmin } = req.user;
 
   try {
-    const user = await getUser(id);
+    if (userId && !isAdmin) {
+      return res
+        .status(403)
+        .json({ error: "Admin privileges required to access other users." });
+    }
+
+    const targetUserId = userId || id;
+
+    const user = await getUser(targetUserId);
+
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-    return res.status(200).json(user);
+
+    const safeUserData = isAdmin
+      ? user
+      : { id: user.id, name: user.name, email: user.email };
+
+    return res.status(200).json(safeUserData);
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
