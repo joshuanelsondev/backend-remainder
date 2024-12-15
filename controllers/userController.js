@@ -16,7 +16,12 @@ const getUserController = async (req, res) => {
 
     const responseData = req.params.id
       ? user
-      : { id: user.id, name: user.name, email: user.email };
+      : {
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+        };
 
     return res.status(200).json(responseData);
   } catch (error) {
