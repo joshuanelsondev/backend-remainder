@@ -16,7 +16,13 @@ const authenticateUser = async (req, res, next) => {
       return res.status(401).json({ message: "User not found" });
     }
 
-    req.user = user;
+    req.user = {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    };
 
     next();
   } catch (error) {
@@ -32,4 +38,4 @@ const authorizeAdmin = (req, res, next) => {
   return res.status(403).json({ message: "Admin privileges required" });
 };
 
-module.exports = { authenticateUser, authorizeAdmin };
+module.exports = authenticateUser;
