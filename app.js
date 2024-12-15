@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 
 // Retrieve token for admin
 if (process.env.NODE_ENV === "development") {
-  app.use("/dev", authorizeAdmin, generateAdminTokenRoute);
+  app.use("/dev", generateAdminTokenRoute);
 }
 
 // Authentication routes for signup and login
