@@ -28,6 +28,7 @@
   "author": "Joshua Nelson",
   "license": "ISC",
   "dependencies": {
+    "@faker-js/faker": "^9.3.0",
     "@passwordless-id/webauthn": "^2.1.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",

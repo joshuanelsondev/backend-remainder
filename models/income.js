@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   class Income extends Model {
     static associate(models) {
       Income.belongsTo(models.User, {
-        foreignKey: "userId",
+        foreignKey: "user_id",
         as: "users",
       });
     }
@@ -24,18 +24,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DECIMAL,
       },
       source: {
-        type: DataTypes.ENUM,
-        values: [
-          "salary",
-          "freelance",
-          "business",
-          "investment",
-          "rental",
-          "gifts",
-          "other",
-        ],
-        allowNull: false,
-        defaultValue: "salary",
+        type: DataTypes.STRING,
+        defaultValue: "miscellaneous",
       },
       date: {
         type: DataTypes.DATE,
