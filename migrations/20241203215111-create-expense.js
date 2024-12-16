@@ -9,7 +9,7 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
-      userId: {
+      user_id: {
         type: Sequelize.UUID,
         allowNull: false,
         references: {
@@ -27,20 +27,7 @@ module.exports = {
         },
       },
       category: {
-        type: Sequelize.ENUM(
-          "housing",
-          "utilities",
-          "groceries",
-          "transportation",
-          "entertainment",
-          "healthcare",
-          "education",
-          "personal",
-          "savings",
-          "debt_repayment",
-          "investment",
-          "miscellaneous"
-        ),
+        type: Sequelize.STRING,
         allowNull: false,
         defaultValue: "miscellaneous",
       },
@@ -49,12 +36,12 @@ module.exports = {
         allowNull: false,
         defaultValue: Sequelize.NOW,
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW,
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW,

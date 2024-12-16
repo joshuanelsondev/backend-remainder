@@ -9,7 +9,7 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
-      userId: {
+      user_id: {
         type: Sequelize.UUID,
         references: {
           model: "users",
@@ -20,26 +20,18 @@ module.exports = {
         type: Sequelize.DECIMAL,
       },
       source: {
-        type: Sequelize.ENUM(
-          "salary",
-          "freelance",
-          "business",
-          "investment",
-          "rental",
-          "gifts",
-          "other"
-        ),
+        type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: "salary",
+        defaultValue: "miscellaneous",
       },
       date: {
         type: Sequelize.DATE,
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },

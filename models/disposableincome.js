@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   class DisposableIncome extends Model {
     static associate(models) {
       DisposableIncome.belongsTo(models.User, {
-        foreignKey: "userId",
+        foreignKey: "user_id",
         as: "user",
       });
     }
