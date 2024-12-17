@@ -2,10 +2,14 @@ const path = require("path");
 const dotenv = require("dotenv");
 const process = require("process");
 
-const result = dotenv.config({ path: `./.env.${process.env.NODE_ENV}` });
+if (process.env.NODE_ENV !== "production") {
+  const result = dotenv.config({ path: `./.env.${process.env.NODE_ENV}` });
 
-if (result.error) {
-  console.warn(`Warning: Failed to load environment, ${process.env.NODE_ENV}`);
+  if (result.error) {
+    console.warn(
+      `Warning: Failed to load environment, ${process.env.NODE_ENV}`
+    );
+  }
 }
 
 const baseConfig = {
