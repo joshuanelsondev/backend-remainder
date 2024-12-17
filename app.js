@@ -11,8 +11,11 @@ const generateAdminTokenRoute = require("./routes/admin-token");
 
 const app = express();
 
+// Trust the reverse proxy (Render)
+app.set("trust proxy", 1);
+
 // Allowed Origins
-const allowedOrigins = process.env.FRONTEND_URL;
+const allowedOrigins = process.env.FRONTEND_URL || "http://localhost:5173";
 console.log("ALLOWED ORIGINS:", allowedOrigins);
 
 // CORS configuration
