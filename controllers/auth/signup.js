@@ -16,7 +16,6 @@ const signupController = async (req, res) => {
       email,
       password: hashedPassword,
       isVerified: false,
-      lastLoginAt: new Date(),
     });
 
     const verificationToken = generateToken({ id: newUser.id });

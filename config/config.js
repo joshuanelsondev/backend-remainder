@@ -2,13 +2,12 @@ const path = require("path");
 const dotenv = require("dotenv");
 const process = require("process");
 
-if (process.env.NODE_ENV !== "production") {
-  const envFile = `.env.${process.env.NODE_ENV || "development"}`;
-  const envFilePath = path.resolve(__dirname, "..", envFile);
-  const result = dotenv.config({ path: envFilePath });
+if (process.env.NODE_ENV === "production") {
+  const envPath = path.resolve(__dirname, "../.env.production");
+  const result = dotenv.config({ path: envPath });
 
   if (result.error) {
-    console.warn(`Warning: No .env file found at ${envFilePath}`);
+    console.warn(`Warning: Failed to load .env.production at ${envPath}`);
   }
 }
 
@@ -51,6 +50,12 @@ const environmentConfigs = {
 };
 
 const currentEnvironment = process.env.NODE_ENV || "development";
+
+if (!baseConfig.url) {
+  throw new Error(
+    `DATABASE_URL is not defined for environment: ${currentEnvironment}`
+  );
+}
 
 module.exports = {
   ...baseConfig,

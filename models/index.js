@@ -10,6 +10,7 @@ const db = {};
 
 let sequelize;
 
+console.log("CONFIG:", config);
 if (!config.url) {
   throw new Error("DATABASE_URL is not defined in your configuration.");
 }
