@@ -19,9 +19,8 @@ const verifyEmailController = async (req, res) => {
     await user.save();
 
     const newToken = generateToken({ id: user.id });
-
     res.redirect(
-      `${process.env.FRONTEND_URL}/mfa-setup?email=${user.email}&token=${newToken}`
+      `https://remainderinvest.netlify.app/mfa-setup?email=${user.email}&token=${newToken}`
     );
   } catch (error) {
     console.error("Error verifying email:", error);
