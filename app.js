@@ -15,19 +15,14 @@ const app = express();
 app.set("trust proxy", 1);
 
 // Allowed Origins
-const allowedOrigins = process.env.FRONTEND_URL || "http://localhost:5173";
+const allowedOrigins =
+  process.env.FRONTEND_URL || "https://remainderinvest.netlify.app";
 console.log("ALLOWED ORIGINS:", allowedOrigins);
 
 // CORS configuration
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
