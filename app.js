@@ -11,15 +11,32 @@ const generateAdminTokenRoute = require("./routes/admin-token");
 
 const app = express();
 
+// Allowed Origins
+const allowedOrigins = [
+  "https://remainderinvest.netlify.app",
+  "http://localhost:3000",
+];
+
+// CORS configuration
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
 // Middleware
-app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Welcome to Remainder");
-});
-
-// Retrieve token for admin
+// Development-only route for generating admin token
 if (process.env.NODE_ENV === "development") {
   app.use("/dev", generateAdminTokenRoute);
 }
@@ -32,6 +49,10 @@ app.use("/users", authenticateUser, userRoutes);
 app.use("/incomes", authenticateUser, incomeRoutes);
 app.use("/expenses", authenticateUser, expenseRoutes);
 app.use("/disposable-income", authenticateUser, disposableIncomeRoutes);
+
+app.get("/", (req, res) => {
+  res.send("Welcome to Remainder");
+});
 
 app.use("*", (req, res) => {
   res.status(404).json({ error: "Route Not Found" });
