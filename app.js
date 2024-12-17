@@ -12,10 +12,8 @@ const generateAdminTokenRoute = require("./routes/admin-token");
 const app = express();
 
 // Allowed Origins
-const allowedOrigins = [
-  "https://remainderinvest.netlify.app",
-  "http://localhost:3000",
-];
+const allowedOrigins = process.env.FRONTEND_URL;
+console.log("ALLOWED ORIGINS:", allowedOrigins);
 
 // CORS configuration
 app.use(
