@@ -11,6 +11,8 @@ const generateAdminTokenRoute = require("./routes/admin-token");
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 // CORS configuration
 app.use(
   cors({
