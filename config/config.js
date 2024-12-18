@@ -25,7 +25,7 @@ const baseConfig = {
 
 const environmentConfigs = {
   development: {
-    logging: console.log,
+    logging: false,
     dialectOptions: {
       ssl: false,
     },
