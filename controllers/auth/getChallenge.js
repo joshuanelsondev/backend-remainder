@@ -1,4 +1,4 @@
-const { server } = require("@passwordless-id/webauthn");
+const crypto = require("crypto");
 const db = require("../../models");
 
 const getChallengeController = async (req, res) => {
@@ -9,7 +9,8 @@ const getChallengeController = async (req, res) => {
     return res.status(404).json({ message: "User not found" });
   }
 
-  const challenge = server.randomChallenge();
+  const challengeBuffer = crypto.randomBytes(32);
+  const challenge = challengeBuffer.toString("base64url");
 
   user.challenge = challenge;
   await user.save();
