@@ -9,9 +9,9 @@ const {
 } = require("../controllers/expenseController");
 
 expense.post("/", createExpenseController);
-expense.get("/:id", getExpenseController);
 expense.get("/", getAllExpensesController);
+expense.get("/:id", getExpenseController);
 expense.put("/:id", updateExpenseController);
-expense.get("/:id", deleteExpenseController);
+expense.delete("/:id", deleteExpenseController);
 
 module.exports = expense;
