@@ -1,9 +1,9 @@
 const express = require("express");
 const disposableIncome = express.Router();
 const {
-  getDisposableIncomeController,
+  getBudgetController,
 } = require("../controllers/disposableIncomeController");
 
-disposableIncome.get("/", getDisposableIncomeController);
+disposableIncome.get("/", getBudgetController);
 
 module.exports = disposableIncome;
