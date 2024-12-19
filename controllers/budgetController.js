@@ -1,12 +1,10 @@
-const {
-  calculateDisposableIncome,
-} = require("../services/disposableIncomeService");
+const { calculateBudget } = require("../services/budgetService");
 
 const getBudgetController = async (req, res) => {
   const userId = req.user.id;
 
   try {
-    const budget = await calculateDisposableIncome(userId);
+    const budget = await calculateBudget(userId);
     return res.status(200).json(budget);
   } catch (error) {
     return res.status(500).json({ error: error.message });

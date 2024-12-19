@@ -1,6 +1,6 @@
 const { Income, Expense } = require("../models");
 
-const calculateDisposableIncome = async (userId) => {
+const calculateBudget = async (userId) => {
   const totalIncome = await Income.sum("amount", {
     where: { userId },
   });
@@ -9,18 +9,18 @@ const calculateDisposableIncome = async (userId) => {
     where: { userId },
   });
 
-  const disposableIncome = (totalIncome || 0) - (totalExpenses || 0);
+  const budget = (totalIncome || 0) - (totalExpenses || 0);
 
-  const result = await DisposableIncome.create({
+  const result = await Budget.create({
     userId,
     totalIncome: totalIncome || 0,
     totalExpenses: totalExpenses || 0,
-    disposableIncome,
+    budget,
   });
 
   return result;
 };
 
 module.exports = {
-  calculateDisposableIncome,
+  calculateBudget,
 };
