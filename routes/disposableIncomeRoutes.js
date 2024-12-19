@@ -4,8 +4,6 @@ const {
   getDisposableIncomeController,
 } = require("../controllers/disposableIncomeController");
 
-const router = express.Router();
-
-router.get("/", getDisposableIncomeController);
+disposableIncome.get("/", getDisposableIncomeController);
 
 module.exports = disposableIncome;

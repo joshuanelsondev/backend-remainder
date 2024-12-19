@@ -9,9 +9,9 @@ const {
 } = require("../controllers/incomeController");
 
 income.post("/", createIncomeController);
-income.get("/:id", getIncomeController);
 income.get("/", getAllIncomesController);
+income.get("/:id", getIncomeController);
 income.put("/:id", updateIncomeController);
-income.get("/:id", deleteIncomeController);
+income.delete("/:id", deleteIncomeController);
 
 module.exports = income;
