@@ -38,7 +38,7 @@ app.use("/auth", authRoutes);
 app.use("/users", authenticateUser, userRoutes);
 app.use("/incomes", authenticateUser, incomeRoutes);
 app.use("/expenses", authenticateUser, expenseRoutes);
-app.use("/disposable-income", authenticateUser, disposableIncomeRoutes);
+app.use("/budget", authenticateUser, disposableIncomeRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to Remainder");

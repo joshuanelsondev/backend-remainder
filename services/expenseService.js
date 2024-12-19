@@ -16,10 +16,10 @@ const getAllExpenses = async (userId, offset = 0, limit = 10) => {
   return await Expense.findAll({
     where: {
       userId,
-      offset,
-      limit,
-      order: [["createdAt", "DESC"]],
     },
+    offset,
+    limit,
+    order: [["createdAt", "DESC"]],
   });
 };
 
