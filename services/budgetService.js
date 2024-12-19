@@ -1,4 +1,4 @@
-const { Income, Expense } = require("../models");
+const { Income, Expense, Budget } = require("../models");
 
 const calculateBudget = async (userId) => {
   const totalIncome = await Income.sum("amount", {
