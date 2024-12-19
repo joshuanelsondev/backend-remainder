@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         as: "expenses",
       });
 
-      User.hasOne(models.DisposableIncome, {
+      User.hasOne(models.Budget, {
         foreignKey: "userId",
-        as: "disposable_incomes",
+        as: "budgets",
       });
     }
   }

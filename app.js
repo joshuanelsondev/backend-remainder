@@ -4,7 +4,7 @@ const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const incomeRoutes = require("./routes/incomeRoutes");
 const expenseRoutes = require("./routes/expenseRoutes");
-const disposableIncomeRoutes = require("./routes/disposableIncomeRoutes");
+const budgetRoutes = require("./routes/budgetRoutes");
 const authenticateUser = require("./middleware/authenticateUser");
 const authorizeAdmin = require("./middleware/authenticateUser");
 const generateAdminTokenRoute = require("./routes/admin-token");
@@ -38,7 +38,7 @@ app.use("/auth", authRoutes);
 app.use("/users", authenticateUser, userRoutes);
 app.use("/incomes", authenticateUser, incomeRoutes);
 app.use("/expenses", authenticateUser, expenseRoutes);
-app.use("/budget", authenticateUser, disposableIncomeRoutes);
+app.use("/budget", authenticateUser, budgetRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to Remainder");

@@ -2,14 +2,14 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("disposable_incomes", {
+    await queryInterface.createTable("budgets", {
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         allowNull: false,
         primaryKey: true,
       },
-      userId: {
+      user_id: {
         type: Sequelize.UUID,
         allowNull: false,
         references: {
@@ -18,47 +18,44 @@ module.exports = {
         },
         onDelete: "CASCADE",
       },
-      totalIncome: {
+      total_income: {
         type: Sequelize.DECIMAL(15, 2),
         allowNull: false,
         defaultValue: 0,
       },
-      totalExpenses: {
+      total_expenses: {
         type: Sequelize.DECIMAL(15, 2),
         allowNull: false,
         defaultValue: 0,
       },
-      disposableIncome: {
+      budget: {
         type: Sequelize.DECIMAL(15, 2),
         allowNull: false,
         defaultValue: 0,
       },
-      calculatedAt: {
+      calculated_at: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.NOW,
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
     });
 
-    await queryInterface.addIndex(
-      "disposable_incomes",
-      ["userId", "calculatedAt"],
-      {
-        unique: true,
-        name: "idx_userId_calculatedAt",
-      }
-    );
+    await queryInterface.addIndex("budgets", ["user_id", "calculated_at"], {
+      unique: true,
+      name: "idx_userId_calculatedAt",
+    });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("disposable_incomes");
+    await queryInterface.removeIndex("budgets", "idx_userId_calculatedAt");
+    await queryInterface.dropTable("budgets");
   },
 };

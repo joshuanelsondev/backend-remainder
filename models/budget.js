@@ -1,15 +1,15 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class DisposableIncome extends Model {
+  class Budget extends Model {
     static associate(models) {
-      DisposableIncome.belongsTo(models.User, {
+      Budget.belongsTo(models.User, {
         foreignKey: "user_id",
         as: "user",
       });
     }
   }
-  DisposableIncome.init(
+  Budget.init(
     {
       id: {
         type: DataTypes.UUID,
@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
           min: 0,
         },
       },
-      disposableIncome: {
+      budget: {
         type: DataTypes.DECIMAL(15, 2),
         allowNull: false,
         defaultValue: 0,
@@ -58,22 +58,22 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "DisposableIncome",
-      tableName: "disposable_incomes",
+      modelName: "Budget",
+      tableName: "budgets",
       underscored: true,
       timestamps: true,
       indexes: [
         {
           unique: true,
-          fields: ["userId", "calculatedAt"],
+          fields: ["user_id", "calculated_at"],
         },
       ],
     }
   );
 
-  DisposableIncome.beforeSave((instance) => {
-    instance.disposableIncome = instance.totalIncome - instance.totalExpenses;
+  Budget.beforeSave((instance) => {
+    instance.budget = instance.totalIncome - instance.totalExpenses;
   });
 
-  return DisposableIncome;
+  return Budget;
 };
