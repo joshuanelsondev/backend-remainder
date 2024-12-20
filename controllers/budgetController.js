@@ -7,6 +7,7 @@ const getBudgetController = async (req, res) => {
     const budget = await calculateBudget(userId);
     return res.status(200).json(budget);
   } catch (error) {
+    console.error(error);
     return res.status(500).json({ error: error.message });
   }
 };
