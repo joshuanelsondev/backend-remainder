@@ -41,6 +41,31 @@ module.exports = (sequelize, DataTypes) => {
           min: 0,
         },
       },
+      incomeTransactions: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
+      },
+      expenseTransactions: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
+      },
+      incomeSources: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
+      },
+      expenseSources: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
+      },
+      totalSources: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
+      },
       budget: {
         type: DataTypes.DECIMAL(15, 2),
         allowNull: false,

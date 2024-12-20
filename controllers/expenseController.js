@@ -1,3 +1,4 @@
+const { calculateBudget } = require("../services/budgetService");
 const {
   createExpense,
   getExpense,
@@ -12,6 +13,7 @@ const createExpenseController = async (req, res) => {
 
   try {
     const expense = await createExpense(expenseData, userId);
+    await calculateBudget(userId);
     return res.status(201).json(expense);
   } catch (error) {
     return res.status(500).json({ error: error.message });
@@ -56,6 +58,7 @@ const updateExpenseController = async (req, res) => {
 
   try {
     const expense = await updateExpense(id, userId, expenseData);
+    await calculateBudget(userId);
     return res.status(200).json(expense);
   } catch (error) {
     if (error.message === "Expense not found") {
@@ -71,6 +74,7 @@ const deleteExpenseController = async (req, res) => {
 
   try {
     await deleteExpense(id, userId);
+    await calculateBudget(userId);
     return res.status(204).send();
   } catch (error) {
     if (error.message === "Expense not found") {
