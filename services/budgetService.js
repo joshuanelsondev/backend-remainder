@@ -20,7 +20,7 @@ const calculateBudget = async (userId) => {
   const expenseSources = await Expense.count({
     where: { userId },
     distinct: true,
-    col: "source",
+    col: "category",
   });
 
   // Calculate total sources
@@ -33,7 +33,7 @@ const calculateBudget = async (userId) => {
     userId,
     totalIncome,
     totalExpenses,
-    disposableIncome,
+    budget,
     incomeSources,
     expenseSources,
     totalSources,
