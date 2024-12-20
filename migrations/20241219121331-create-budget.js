@@ -28,6 +28,31 @@ module.exports = {
         allowNull: false,
         defaultValue: 0,
       },
+      income_transactions: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
+      },
+      expense_transactions: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
+      },
+      income_sources: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
+      },
+      expense_sources: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
+      },
+      total_sources: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
+      },
       budget: {
         type: Sequelize.DECIMAL(15, 2),
         allowNull: false,

@@ -1,3 +1,4 @@
+const { calculateBudget } = require("../services/budgetService");
 const {
   createIncome,
   getIncome,
@@ -12,6 +13,7 @@ const createIncomeController = async (req, res) => {
 
   try {
     const income = await createIncome(incomeData, userId);
+    await calculateBudget(userId);
     return res.status(201).json(income);
   } catch (error) {
     return res.status(500).json({ error: error.message });
@@ -56,6 +58,7 @@ const updateIncomeController = async (req, res) => {
 
   try {
     const income = await updateIncome(id, userId, incomeData);
+    await calculateBudget(userId);
     return res.status(200).json(income);
   } catch (error) {
     if (error.message === "Income not found") {
@@ -71,6 +74,7 @@ const deleteIncomeController = async (req, res) => {
 
   try {
     await deleteIncome(id, userId);
+    await calculateBudget(userId);
     return res.status(204).send();
   } catch (error) {
     if (error.message === "Income not found") {
