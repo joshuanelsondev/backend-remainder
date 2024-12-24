@@ -7,6 +7,13 @@ const { server } = require("@passwordless-id/webauthn");
 const signupController = async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
+    // Check if the email is already in use
+    const existingUser = await db.User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({
+        message: "Email account is already in use.",
+      });
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
