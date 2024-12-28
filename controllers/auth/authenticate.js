@@ -1,5 +1,6 @@
 const { server } = require("@passwordless-id/webauthn");
 const db = require("../../models");
+const { generateToken } = require("../../utils/token");
 
 const authenticateController = async (req, res) => {
   const { authentication, email } = req.body;
@@ -26,25 +27,17 @@ const authenticateController = async (req, res) => {
     const expected = {
       challenge: user.challenge,
       origin: process.env.EXPECTED_ORIGIN,
-      userVerified: true,
     };
 
-    // const verification = await server.verifyAuthentication(authentication, {
-    //   challenge: user.challenge,
-    //   origin: process.env.EXPECTED_ORIGIN,
-    //   rpID: process.env.EXPECTED_RPID,
-    //   credentialID: user.webauthnid,
-    // });
     const verification = await server.verifyAuthentication(
       authentication,
       credentialKey,
       expected
     );
 
-    if (verification.verified) {
-      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-        expiresIn: "1h",
-      });
+    console.log("Verification:", verification);
+    if (verification.userVerified) {
+      const token = generateToken({ id: user.id });
 
       user.challenge = null;
       if (verification.counter !== undefined) {
