@@ -41,7 +41,7 @@ module.exports = {
           max: 65,
           mode: "age",
         }),
-        password: await bcrypt.hash("securePassword123", 10),
+        password: await bcrypt.hash("SecurePassword123!", 10),
         is_verified: true,
         mfa_enabled: true,
         is_admin: false,

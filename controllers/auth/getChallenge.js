@@ -9,8 +9,7 @@ const getChallengeController = async (req, res) => {
     return res.status(404).json({ message: "User not found" });
   }
 
-  const challengeBuffer = crypto.randomBytes(32);
-  const challenge = challengeBuffer.toString("base64url");
+  const challenge = crypto.randomBytes(32).toString("base64url");
 
   user.challenge = challenge;
   await user.save();
