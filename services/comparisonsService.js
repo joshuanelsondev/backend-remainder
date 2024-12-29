@@ -11,7 +11,7 @@ const getMonthlyComparisons = async (userId, startDate, endDate) => {
       },
       attributes: [
         [
-          db.Sequelize.fn("DATE_FORMAT", db.Sequelize.col("date"), "%Y-%m"),
+          db.Sequelize.fn("TO_CHAR", db.Sequelize.col("date"), "YYYY-MM"),
           "month",
         ],
         [db.Sequelize.fn("SUM", db.Sequelize.col("amount")), "total_income"],
@@ -30,7 +30,7 @@ const getMonthlyComparisons = async (userId, startDate, endDate) => {
       },
       attributes: [
         [
-          db.Sequelize.fn("DATE_FORMAT", db.Sequelize.col("date"), "%Y-%m"),
+          db.Sequelize.fn("TO_CHAR", db.Sequelize.col("date"), "YYYY-MM"),
           "month",
         ],
         [db.Sequelize.fn("SUM", db.Sequelize.col("amount")), "total_expenses"],
