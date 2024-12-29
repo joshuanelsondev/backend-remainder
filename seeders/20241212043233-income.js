@@ -142,7 +142,7 @@ module.exports = {
         updated_at: new Date(),
       },
     ];
-
+    // Generate a unique UUID
     await queryInterface.bulkInsert("incomes", incomes);
   },
 

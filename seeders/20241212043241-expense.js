@@ -141,7 +141,7 @@ module.exports = {
         updated_at: new Date(),
       },
     ];
-
+    // Random date in 2024, formatted as YYYY-MM-DD
     await queryInterface.bulkInsert("expenses", expenses);
   },
 
