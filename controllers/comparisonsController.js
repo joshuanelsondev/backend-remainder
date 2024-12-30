@@ -5,8 +5,12 @@ const getComparisons = async (req, res) => {
   const { startDate, endDate } = req.query;
 
   try {
-    const data = await getMonthlyComparisons(userId, startDate, endDate);
-    res.status(200).json({ data });
+    const comparisonsData = await getMonthlyComparisons(
+      userId,
+      startDate,
+      endDate
+    );
+    res.status(200).json(comparisonsData);
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch comparisons", error });
   }
