@@ -9,7 +9,7 @@ module.exports = {
         id: "e8a54329-d678-4db2-9281-9d2b6a4d4592",
         user_id: userId,
         amount: 1200.5,
-        category: "housing",
+        category: "rent",
         date: "2024-01-25",
         created_at: new Date(),
         updated_at: new Date(),
@@ -90,7 +90,7 @@ module.exports = {
         id: "4b9d3a7e-5f6c-48d8-bc7d-9e5a7d8b6c9f",
         user_id: userId,
         amount: 500.0,
-        category: "debt_repayment",
+        category: "debt",
         date: "2024-09-05",
         created_at: new Date(),
         updated_at: new Date(),
@@ -140,6 +140,15 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
       },
+      {
+        id: "b6e7e7e3-7807-4e2e-845d-a0b1d23d843b",
+        user_id: userId,
+        amount: 1000.0,
+        category: "rent",
+        date: "2024-12-20",
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
     ];
     // Random date in 2024, formatted as YYYY-MM-DD
     await queryInterface.bulkInsert("expenses", expenses);
@@ -163,6 +172,7 @@ module.exports = {
         "a6e5b7d9-4c8f-4f7a-b9c5-7e3d8f9a6b4c",
         "8e4d6a9c-5f7a-4f3d-bc9e-5a9b7d8f6c4e",
         "7f6c3a9e-5b7d-4a9f-bd3e-5c8a9e6b7d4f",
+        "b6e7e7e3-7807-4e2e-845d-a0b1d23d843b",
       ],
     });
   },

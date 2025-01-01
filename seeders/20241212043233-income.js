@@ -141,6 +141,15 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
       },
+      {
+        id: "9de3e558-94cb-4eae-b631-9de33143bbae",
+        user_id: userId,
+        amount: 2000.0,
+        source: "salary",
+        date: "2025-01-01",
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
     ];
     // Generate a unique UUID
     await queryInterface.bulkInsert("incomes", incomes);
@@ -164,6 +173,7 @@ module.exports = {
         "7d5f3a9b-6c4e-48a7-bd9e-4c2b6e9b5a5f",
         "8e5c3a7d-4b6e-4f7d-b9e5-3c6b9a5d7e3f",
         "4e9d5b7c-6a8f-4c9e-bf7d-3b5d9a7e5f3c",
+        "9de3e558-94cb-4eae-b631-9de33143bbae",
       ],
     });
   },
