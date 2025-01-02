@@ -146,7 +146,7 @@ module.exports = {
         user_id: userId,
         amount: 2000.0,
         source: "salary",
-        date: "2025-01-01",
+        date: "2025-01-02",
         created_at: new Date(),
         updated_at: new Date(),
       },
