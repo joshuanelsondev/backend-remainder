@@ -1,7 +1,11 @@
 const express = require("express");
-const { getComparisons } = require("../controllers/comparisonsController");
+const {
+  getComparisons,
+  getComparisonsYears,
+} = require("../controllers/comparisonsController");
 const router = express.Router();
 
 router.get("/", getComparisons);
+router.get("/years", getComparisonsYears);
 
 module.exports = router;

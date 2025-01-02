@@ -145,7 +145,7 @@ module.exports = {
         user_id: userId,
         amount: 1000.0,
         category: "rent",
-        date: "2024-12-20",
+        date: "2025-01-02",
         created_at: new Date(),
         updated_at: new Date(),
       },
