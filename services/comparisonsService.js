@@ -1,12 +1,12 @@
 const db = require("../models");
 
-const getMonthlyComparisons = async (userId, startDate, endDate) => {
+const getMonthlyComparisons = async (userId, startDate) => {
   try {
     const incomes = await db.Income.findAll({
       where: {
         user_id: userId,
         date: {
-          [db.Sequelize.Op.between]: [startDate, endDate],
+          [db.Sequelize.Op.gte]: startDate,
         },
       },
       attributes: [
@@ -25,7 +25,7 @@ const getMonthlyComparisons = async (userId, startDate, endDate) => {
       where: {
         user_id: userId,
         date: {
-          [db.Sequelize.Op.between]: [startDate, endDate],
+          [db.Sequelize.Op.gte]: startDate,
         },
       },
       attributes: [
