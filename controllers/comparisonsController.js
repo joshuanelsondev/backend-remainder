@@ -20,9 +20,13 @@ const getComparisons = async (req, res) => {
 };
 
 const getComparisonsYears = async (req, res) => {
-  const userId = req.user.id; // Assumes user authentication middleware is in place
+  const userId = req.user.id;
   try {
     const years = await getAvailableYears(userId);
+    if (!years || years.length === 0) {
+      return res.status(404).json({ error: "No years found for the user" });
+    }
+
     res.status(200).json({ years });
   } catch (error) {
     console.error("Error fetching available years:", error);

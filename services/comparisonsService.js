@@ -68,13 +68,7 @@ const getAvailableYears = async (userId) => {
     const incomeYears = await db.Income.findAll({
       where: { user_id: userId },
       attributes: [
-        [
-          db.Sequelize.fn(
-            "DISTINCT",
-            db.Sequelize.fn("YEAR", db.Sequelize.col("date"))
-          ),
-          "year",
-        ],
+        [db.Sequelize.literal('DISTINCT EXTRACT(YEAR FROM "date")'), "year"],
       ],
       raw: true,
     });
@@ -82,13 +76,7 @@ const getAvailableYears = async (userId) => {
     const expenseYears = await db.Expense.findAll({
       where: { user_id: userId },
       attributes: [
-        [
-          db.Sequelize.fn(
-            "DISTINCT",
-            db.Sequelize.fn("YEAR", db.Sequelize.col("date"))
-          ),
-          "year",
-        ],
+        [db.Sequelize.literal('DISTINCT EXTRACT(YEAR FROM "date")'), "year"],
       ],
       raw: true,
     });
@@ -103,8 +91,8 @@ const getAvailableYears = async (userId) => {
 
     return years;
   } catch (error) {
-    console.error("Error in getAvailableYears:", error);
-    throw error;
+    console.error("Error in getAvailableYears:", error.message);
+    throw new Error("Failed to fetch available years");
   }
 };
 module.exports = { getMonthlyComparisons, getAvailableYears };
