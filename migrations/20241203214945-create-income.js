@@ -11,21 +11,30 @@ module.exports = {
       },
       user_id: {
         type: Sequelize.UUID,
+        allowNull: false,
         references: {
           model: "users",
           key: "id",
         },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       amount: {
         type: Sequelize.DECIMAL,
+        allowNull: false,
+        validate: {
+          min: 0,
+        },
       },
       source: {
-        type: Sequelize.STRING,
+        type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: "miscellaneous",
+        defaultValue: DataTypes.NOW,
       },
       date: {
         type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.NOW,
       },
       created_at: {
         allowNull: false,

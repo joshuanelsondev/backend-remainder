@@ -19,16 +19,29 @@ module.exports = (sequelize, DataTypes) => {
       },
       userId: {
         type: DataTypes.UUID,
+        allowNull: false,
+        references: {
+          model: "users",
+          key: "id",
+        },
       },
       amount: {
         type: DataTypes.DECIMAL,
+        allowNull: false,
+        validate: {
+          isDecimal: true,
+          min: 0,
+        },
       },
       source: {
         type: DataTypes.STRING,
         defaultValue: "miscellaneous",
+        allowNull: false,
       },
       date: {
         type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
       },
     },
     {
