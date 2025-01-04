@@ -29,7 +29,7 @@ module.exports = {
       category: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: "miscellaneous",
+        defaultValue: "other",
       },
       date: {
         type: Sequelize.DATE,

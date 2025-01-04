@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       category: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: "miscellaneous",
+        defaultValue: "other",
       },
       date: {
         type: DataTypes.DATE,

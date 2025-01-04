@@ -117,7 +117,7 @@ module.exports = {
         id: "a6e5b7d9-4c8f-4f7a-b9c5-7e3d8f9a6b4c",
         user_id: userId,
         amount: 75.0,
-        category: "miscellaneous",
+        category: "other",
         date: "2024-12-01",
         created_at: new Date(),
         updated_at: new Date(),
