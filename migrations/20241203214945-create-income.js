@@ -27,9 +27,9 @@ module.exports = {
         },
       },
       source: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
+        defaultValue: "other",
         allowNull: false,
-        defaultValue: DataTypes.NOW,
       },
       date: {
         type: Sequelize.DATE,

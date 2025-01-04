@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       source: {
         type: DataTypes.STRING,
-        defaultValue: "miscellaneous",
+        defaultValue: "other",
         allowNull: false,
       },
       date: {
