@@ -27,7 +27,7 @@ module.exports = {
         },
       },
       source: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         defaultValue: "other",
         allowNull: false,
       },
