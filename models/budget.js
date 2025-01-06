@@ -72,7 +72,6 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0,
         validate: {
           isDecimal: true,
-          min: 0,
         },
       },
       calculatedAt: {
