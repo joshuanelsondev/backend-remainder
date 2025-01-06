@@ -35,7 +35,6 @@ const authenticateController = async (req, res) => {
       expected
     );
 
-    console.log("Verification:", verification);
     if (verification.userVerified) {
       const token = generateToken({ id: user.id });
 
