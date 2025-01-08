@@ -33,6 +33,10 @@ module.exports = (sequelize, DataTypes) => {
           min: 0,
         },
       },
+      recurring: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
       category: {
         type: DataTypes.STRING,
         allowNull: false,
