@@ -26,6 +26,10 @@ module.exports = {
           min: 0,
         },
       },
+      recurring: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
       source: {
         type: Sequelize.STRING,
         defaultValue: "other",

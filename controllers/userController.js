@@ -21,6 +21,8 @@ const getUserController = async (req, res) => {
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
+          phoneNumber: user.phoneNumber,
+          dateOfBirth: user.dateOfBirth,
         };
 
     return res.status(200).json(responseData);
@@ -31,7 +33,7 @@ const getUserController = async (req, res) => {
 };
 
 const updateUserController = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.user;
   const updateData = req.body;
 
   try {
