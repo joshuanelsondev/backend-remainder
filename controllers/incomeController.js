@@ -40,14 +40,15 @@ const getAllIncomesController = async (req, res) => {
   const { offset = 0, limit = 10 } = req.query;
 
   try {
-    const incomes = await getAllIncomes(
+    const { incomes, total } = await getAllIncomes(
       userId,
-      parseInt(offset),
-      parseInt(limit)
+      parseInt(offset, 10),
+      parseInt(limit, 10)
     );
-    return res.status(200).json(incomes);
+    return res.status(200).json({ incomes, total });
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    console.error("Error fetching incomes:", error.message);
+    return res.status(500).json({ error: "Failed to fetch incomes" });
   }
 };
 
