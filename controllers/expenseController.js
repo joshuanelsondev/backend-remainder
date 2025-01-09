@@ -40,12 +40,12 @@ const getAllExpensesController = async (req, res) => {
   const { offset = 0, limit = 10 } = req.query;
 
   try {
-    const expenses = await getAllExpenses(
+    const { expenses, total } = await getAllExpenses(
       userId,
       parseInt(offset),
       parseInt(limit)
     );
-    return res.status(200).json(expenses);
+    return res.status(200).json({ expenses, total });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

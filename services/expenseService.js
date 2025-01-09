@@ -13,14 +13,19 @@ const getExpense = async (id, userId) => {
 };
 
 const getAllExpenses = async (userId, offset = 0, limit = 10) => {
-  return await Expense.findAll({
+  const { count, rows } = await Expense.findAndCountAll({
     where: {
       userId,
     },
     offset,
     limit,
-    order: [["createdAt", "DESC"]],
+    order: [["date", "DESC"]],
   });
+
+  return {
+    total: count,
+    expenses: rows,
+  };
 };
 
 const updateExpense = async (id, userId, data) => {

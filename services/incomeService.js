@@ -13,14 +13,19 @@ const getIncome = async (id, userId) => {
 };
 
 const getAllIncomes = async (userId, offset = 0, limit = 10) => {
-  return await Income.findAll({
+  const { count, rows } = await Income.findAndCountAll({
     where: {
       userId,
     },
     offset,
     limit,
-    order: [["createdAt", "DESC"]],
+    order: [["date", "DESC"]],
   });
+
+  return {
+    total: count,
+    incomes: rows,
+  };
 };
 
 const updateIncome = async (id, userId, data) => {
