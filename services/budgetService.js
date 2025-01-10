@@ -33,11 +33,6 @@ const calculateExpenseTransactions = async (userId) => {
   return await Expense.count({ where: { userId } });
 };
 
-// Create calculate hash for budgetData comparison
-const calculateHash = (data) => {
-  return crypto.createHash("sha256").update(JSON.stringify(data)).digest("hex");
-};
-
 // Main function to calculate and update the budget
 const calculateBudget = async (userId) => {
   const [
@@ -88,8 +83,7 @@ const calculateBudget = async (userId) => {
       totalSources: existingBudget.totalSources,
       incomeTransactions: existingBudget.incomeTransactions,
       expenseTransactions: existingBudget.expenseTransactions,
-      totalTransactions:
-        existingBudget.incomeTransactions + existingBudget.expenseTransactions,
+      totalTransactions,
       calculatedAt: new Date(existingBudget.calculatedAt),
     };
 
