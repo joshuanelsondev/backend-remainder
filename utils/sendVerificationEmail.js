@@ -20,7 +20,7 @@ const sendVerificationEmail = async (user) => {
   const verificationLink = `${process.env.BACKEND_URL}/auth/verify/${verificationToken}`;
 
   const mailOptions = {
-    from: process.env.EMAIL,
+    from: `"The Remainder Team" <no-reply@remainderinvest.netlify.app>`,
     to: user.email,
     subject: "Verify Your Email - Remainder",
     text: `Hi ${user.firstName},\n\nThank you for signing up for Remainder! Please verify your email to activate your account.\n\nClick the link below to verify your email:\n${verificationLink}\n\nIf you didn’t sign up for Remainder, you can safely ignore this email.\n\nBest regards,\nThe Remainder Team`,
