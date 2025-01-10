@@ -81,7 +81,7 @@ The API has the following endpoints:
 - **Users**: `/api/users` - Manage user registration and authentication.
 - **Incomes**: `/api/incomes` - Add, update, delete, and view incomes.
 - **Expenses**: `/api/expenses` - Add, update, delete, and view expenses.
-- **Disposable Income**: `/api/disposable-income` - Calculate disposable income based on income and expenses.
+- **Disposable Income**: `/api/budget` - Calculate disposable income based on income and expenses.
 
 ## Contributing
 
