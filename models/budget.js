@@ -66,6 +66,11 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0,
         allowNull: false,
       },
+      totalTransactions: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
       budget: {
         type: DataTypes.DECIMAL(15, 2),
         allowNull: false,
