@@ -91,6 +91,6 @@ Contributions are welcome! Feel free to open issues or submit pull requests with
 
 For any questions or inquiries, reach out via:
 
-- Email: joshuanelsonsax@gmail.com
+- Email: joshuanelsondev@gmail.com
 
 [Back to the top](#table-of-contents)
