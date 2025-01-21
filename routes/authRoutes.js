@@ -13,7 +13,6 @@ const validateLogin = require("../utils/validateLogin");
 // Middleware and utils
 const createRateLimiter = require("../utils/rateLimiter");
 const validateSignup = require("../utils/validateSignup");
-const verifyToken = require("../middleware/verifyToken");
 
 const router = express.Router();
 
