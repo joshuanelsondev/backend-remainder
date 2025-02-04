@@ -2,7 +2,6 @@ const bcrypt = require("bcryptjs");
 const db = require("../../models");
 const { generateToken } = require("../../utils/token");
 const sendVerificationEmail = require("../../utils/sendVerificationEmail");
-const { server } = require("@passwordless-id/webauthn");
 
 const signupController = async (req, res) => {
   try {
